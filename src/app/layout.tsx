@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Bingo !",
-  description: "Bingo Game",
+  title: "Emoji Detective Bingo !",
+  description: "Emoji Detective Bingo Game",
 };
 
 export default function RootLayout({

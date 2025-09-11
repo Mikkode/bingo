@@ -183,11 +183,11 @@ export default function BingoApp() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-rainbow-50 via-purple-50 to-pink-50 p-6">
-      <div className="max-w-7xl mx-auto">
+      <div className="w-full mx-auto">
         {/* Header */}
-        <div className="text-center mb-6 md:mb-8">
+        <div className="text-center mb-6 md:mb-8 max-w-7xl mx-auto">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent mb-2 md:mb-4 drop-shadow-lg">
-            🎨 Emotions Bingo 🎨
+            🕵️ Emoji Detective Bingo 🕵️
           </h1>
           <p className="text-base sm:text-lg md:text-xl text-gray-700 font-medium px-4">
             ✨ Create magical cards for children! ✨
@@ -195,13 +195,13 @@ export default function BingoApp() {
         </div>
 
         {/* Configuration */}
-        <div className="bg-gradient-to-r from-white to-purple-50 rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 mb-6 md:mb-8 no-print border-4 border-purple-200">
+        <div className="bg-gradient-to-r from-white to-purple-50 rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 mb-6 md:mb-8 no-print border-4 border-purple-200 max-w-7xl mx-auto">
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-purple-800 mb-4 md:mb-6 text-center">
-            🎮 Game Configuration
+            🕵️ Emoji Detective Bingo 🕵️
           </h2>
           
           {/* Winning Emotions Display */}
-          <div className="mb-4 md:mb-6 p-3 sm:p-4 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl border-2 border-yellow-300">
+          <div className="mb-4 md:mb-6 p-3 sm:p-4 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl border-2 border-yellow-300 ">
             <h3 className="text-lg sm:text-xl font-bold text-orange-800 mb-3 text-center">
               ❤️ 12 Heart Pattern Emotions ❤️
             </h3>
@@ -224,7 +224,7 @@ export default function BingoApp() {
             </p>
           </div>
           
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mb-4 md:mb-6">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mb-4 md:mb-6 ">
             <label className="text-lg sm:text-xl text-purple-700 font-bold">
               🏆 Number of winners:
             </label>
@@ -300,7 +300,7 @@ export default function BingoApp() {
 
         {/* Winning Cards Numbers Display */}
         {cards.length > 0 && (
-          <div className="bg-gradient-to-r from-yellow-100 to-orange-100 rounded-2xl shadow-lg p-4 sm:p-6 mb-6 md:mb-8 border-4 border-yellow-300 no-print">
+          <div className="bg-gradient-to-r from-yellow-100 to-orange-100 rounded-2xl shadow-lg p-4 sm:p-6 mb-6 md:mb-8 border-4 border-yellow-300 no-print max-w-7xl mx-auto">
             <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-orange-800 mb-3 text-center">
               🏆 Winning Cards Numbers 🏆
             </h3>
@@ -366,9 +366,9 @@ export default function BingoApp() {
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-pink-800 mb-4 md:mb-8 no-print text-center">
               🎨 Magic Cards Generated ({cards.length}) 🎨
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 print-grid">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
               {cards.map((card, index) => (
-                <div key={card.id} className={index > 0 && (index + 1) % 4 === 0 ? 'print-break' : ''}>
+                <div key={card.id}>
                   <BingoCardComponent card={card} showWinners={showWinners} showHeartBorders={showHeartBorders} />
                 </div>
               ))}
@@ -392,19 +392,10 @@ function BingoCardComponent({ card, showWinners, showHeartBorders }: { card: Bin
     }`}>
       {/* Card header */}
       <div className="text-center mb-3 sm:mb-4">
-        <div className={`text-white rounded-xl py-1 sm:py-2 px-2 sm:px-4 mb-1 sm:mb-2 ${
-          isWinnerVisible
-            ? 'bg-gradient-to-r from-yellow-500 to-orange-600' 
-            : 'bg-gradient-to-r from-pink-500 to-purple-600'
-        }`}>
-          <h3 className="text-lg sm:text-xl md:text-2xl font-black">
-            {isWinnerVisible ? '🏆' : '🎯'} Card #{card.id} {isWinnerVisible ? '🏆' : ''}
-          </h3>
-        </div>
-        <div className={`text-sm sm:text-base md:text-lg font-bold ${
+        <div className={`text-sm sm:text-base font-bold ${
           isWinnerVisible ? 'text-orange-700' : 'text-purple-700'
         }`}>
-          ✨ Emotions Bingo ✨
+          🕵️ Emoji Detective Bingo 🕵️
         </div>
         {isWinnerVisible && (
           <div className="text-xs sm:text-sm font-bold text-yellow-600 mt-1 animate-pulse">
@@ -413,33 +404,33 @@ function BingoCardComponent({ card, showWinners, showHeartBorders }: { card: Bin
         )}
       </div>
 
-      {/* 5x5 Grid */}
-      <div className="bingo-grid grid grid-cols-5 gap-1 sm:gap-2">
-        {card.grid.map((row, rowIndex) =>
-          row.map((emotion, colIndex) => {
-            const emotionData = EMOTIONS.find(e => e.name === emotion);
-            const isHeartPosition = HEART_PATTERN.some(([r, c]) => r === rowIndex && c === colIndex);
-            const isWinningEmotion = WINNING_EMOTIONS.includes(emotion || '');
-            const shouldShowHeart = showHeartBorders && isHeartPosition && isWinningEmotion;
-            
-            return (
-              <div
-                key={`${rowIndex}-${colIndex}`}
-                className={`
-                  bingo-cell aspect-square flex items-center justify-center
-                  border-2 rounded-lg sm:rounded-xl shadow-lg transition-transform duration-200 ease-out hover:scale-105
-                  ${emotionData?.color} ${emotionData?.borderColor} hover:shadow-lg
-                `}
-              >
-                <div className="text-center">
-                  <div className="text-lg sm:text-xl md:text-2xl mb-1 drop-shadow-lg">
-                    {shouldShowHeart ? '❤️' : emotionData?.emoji}
-                  </div>
+      {/* Layout: Grid + Number */}
+      <div className="flex flex-col items-center gap-2">
+        {/* 5x5 Grid - Tableau style */}
+        <div className="grid grid-cols-5 grid-rows-5 gap-0 border-2 border-black w-fit">
+          {card.grid.map((row, rowIndex) =>
+            row.map((emotion, colIndex) => {
+              const emotionData = EMOTIONS.find(e => e.name === emotion);
+              const isHeartPosition = HEART_PATTERN.some(([r, c]) => r === rowIndex && c === colIndex);
+              const isWinningEmotion = WINNING_EMOTIONS.includes(emotion || '');
+              const shouldShowHeart = showHeartBorders && isHeartPosition && isWinningEmotion;
+              
+              return (
+                <div
+                  key={`${rowIndex}-${colIndex}`}
+                  className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 border border-black bg-white flex items-center justify-center text-2xl sm:text-3xl"
+                >
+                  {shouldShowHeart ? '❤️' : emotionData?.emoji}
                 </div>
-              </div>
-            );
-          })
-        )}
+              );
+            })
+          )}
+        </div>
+        
+        {/* Card number - discrete below grid */}
+        <div className="text-xs text-gray-500 font-mono">
+          {card.id}
+        </div>
       </div>
     </div>
   );
