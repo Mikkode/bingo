@@ -178,15 +178,60 @@ export default function BingoApp() {
 
   // Fonction pour imprimer les cartes
   const printCards = () => {
+    // Hide all non-printable elements
+    const nonPrintElements = document.querySelectorAll('.no-print');
+    nonPrintElements.forEach(el => {
+      (el as HTMLElement).style.display = 'none';
+    });
+    
+    // Show print first page
+    const printFirstPage = document.querySelector('.print-first-page');
+    if (printFirstPage) {
+      (printFirstPage as HTMLElement).style.display = 'block';
+    }
+    
+    // Get all regular cards
+    const regularCards = document.querySelectorAll('.bingo-card');
+    
+    // Create print layout container
+    const printContainer = document.createElement('div');
+    printContainer.className = 'print-cards-container';
+    
+    // Add all cards to the container (they will wrap automatically)
+    regularCards.forEach(card => {
+      const clonedCard = card.cloneNode(true) as HTMLElement;
+      // Remove any print-specific classes and keep the original styling
+      clonedCard.classList.remove('hidden');
+      printContainer.appendChild(clonedCard);
+    });
+    
+    // Add the container to the body
+    document.body.appendChild(printContainer);
+    
+    // Print
     window.print();
+    
+    // Clean up after print
+    setTimeout(() => {
+      document.body.removeChild(printContainer);
+      
+      // Restore elements
+      nonPrintElements.forEach(el => {
+        (el as HTMLElement).style.display = '';
+      });
+      
+      if (printFirstPage) {
+        (printFirstPage as HTMLElement).style.display = 'none';
+      }
+    }, 1000);
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-rainbow-50 via-purple-50 to-pink-50 p-6">
       <div className="w-full mx-auto">
         {/* Header */}
-        <div className="text-center mb-6 md:mb-8 max-w-7xl mx-auto">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent mb-2 md:mb-4 drop-shadow-lg">
+        <div className="text-center mb-6 md:mb-8 max-w-7xl mx-auto no-print">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent mb-2 md:mb-4 drop-shadow-lg leading-tight">
             🕵️ Emoji Detective Bingo 🕵️
           </h1>
           <p className="text-base sm:text-lg md:text-xl text-gray-700 font-medium px-4">
@@ -197,11 +242,11 @@ export default function BingoApp() {
         {/* Configuration */}
         <div className="bg-gradient-to-r from-white to-purple-50 rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 mb-6 md:mb-8 no-print border-4 border-purple-200 max-w-7xl mx-auto">
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-purple-800 mb-4 md:mb-6 text-center">
-            🕵️ Emoji Detective Bingo 🕵️
+            Configuration
           </h2>
           
           {/* Winning Emotions Display */}
-          <div className="mb-4 md:mb-6 p-3 sm:p-4 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl border-2 border-yellow-300 ">
+          <div className="mb-4 md:mb-6 p-3 sm:p-4 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl border-2 border-yellow-300 no-print">
             <h3 className="text-lg sm:text-xl font-bold text-orange-800 mb-3 text-center">
               ❤️ 12 Heart Pattern Emotions ❤️
             </h3>
@@ -280,7 +325,7 @@ export default function BingoApp() {
 
         {/* Error Display */}
         {error && (
-          <div className="bg-gradient-to-r from-red-100 to-pink-100 rounded-2xl shadow-lg p-4 sm:p-6 mb-6 md:mb-8 border-4 border-red-300">
+          <div className="bg-gradient-to-r from-red-100 to-pink-100 rounded-2xl shadow-lg p-4 sm:p-6 mb-6 md:mb-8 border-4 border-red-300 no-print">
             <h3 className="text-lg sm:text-xl font-bold text-red-800 mb-2 text-center">
               ⚠️ Generation Error ⚠️
             </h3>
@@ -360,6 +405,34 @@ export default function BingoApp() {
           </div>
         )}
 
+        {/* Print first page - hidden by default */}
+        <div className="print-first-page hidden">
+          <div className="print-winning-emotions">
+            <h3>❤️ 12 Heart Pattern Emotions ❤️</h3>
+            <div className="print-winning-emotions-grid">
+              {WINNING_EMOTIONS.map((emotion, index) => {
+                const emotionData = EMOTIONS.find(e => e.name === emotion);
+                return (
+                  <div key={index} className="print-winning-emotion">
+                    {emotionData?.emoji} {emotion}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          
+          <div className="print-winning-numbers">
+            <h3>🎯 Winning Card Numbers 🎯</h3>
+            <div className="print-winning-numbers-list">
+              {cards.filter(card => card.isWinner).map((card, index) => (
+                <span key={index} className="print-winning-number">
+                  #{card.id}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* Cards Display */}
         {cards.length > 0 && (
           <div className="bg-gradient-to-br from-white to-pink-50 rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 border-4 border-pink-200">
@@ -368,7 +441,7 @@ export default function BingoApp() {
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
               {cards.map((card, index) => (
-                <div key={card.id}>
+                <div key={card.id} className={index % 4 === 0 && index > 0 ? "print-page-break" : ""}>
                   <BingoCardComponent card={card} showWinners={showWinners} showHeartBorders={showHeartBorders} />
                 </div>
               ))}
@@ -385,17 +458,17 @@ function BingoCardComponent({ card, showWinners, showHeartBorders }: { card: Bin
   const isWinnerVisible = showWinners && card.isWinner;
   
   return (
-    <div className={`bingo-card bg-gradient-to-br from-white to-purple-50 border-4 rounded-2xl p-3 sm:p-4 md:p-6 shadow-2xl transition-transform duration-300 ease-out hover:scale-105 ${
+    <div className={`border-4 rounded-2xl p-3 sm:p-4 md:p-6 shadow-2xl transition-transform duration-300 ease-out hover:scale-105  ${
       isWinnerVisible
         ? 'border-yellow-400 bg-gradient-to-br from-yellow-50 to-orange-100 shadow-yellow-200' 
         : 'border-purple-300'
     }`}>
       {/* Card header */}
       <div className="text-center mb-3 sm:mb-4">
-        <div className={`text-sm sm:text-base font-bold ${
+        <div className={`text-sm sm:text-lg md:text-2xl font-bold ${
           isWinnerVisible ? 'text-orange-700' : 'text-purple-700'
         }`}>
-          🕵️ Emoji Detective Bingo 🕵️
+          Emoji Detective Bingo
         </div>
         {isWinnerVisible && (
           <div className="text-xs sm:text-sm font-bold text-yellow-600 mt-1 animate-pulse">
@@ -407,7 +480,7 @@ function BingoCardComponent({ card, showWinners, showHeartBorders }: { card: Bin
       {/* Layout: Grid + Number */}
       <div className="flex flex-col items-center gap-2">
         {/* 5x5 Grid - Tableau style */}
-        <div className="grid grid-cols-5 grid-rows-5 gap-0 border-2 border-black w-fit">
+        <div className="grid grid-cols-5 grid-rows-5 w-fit border-1 border-black">
           {card.grid.map((row, rowIndex) =>
             row.map((emotion, colIndex) => {
               const emotionData = EMOTIONS.find(e => e.name === emotion);
@@ -418,7 +491,7 @@ function BingoCardComponent({ card, showWinners, showHeartBorders }: { card: Bin
               return (
                 <div
                   key={`${rowIndex}-${colIndex}`}
-                  className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 border border-black bg-white flex items-center justify-center text-2xl sm:text-3xl"
+                  className=" w-12 h-12 sm:w-10 sm:h-10 lg:w-16 lg:h-16 bg-white flex items-center justify-center text-3xl sm:text-3xl lg:text-5xl border-1 border-black"
                 >
                   {shouldShowHeart ? '❤️' : emotionData?.emoji}
                 </div>
@@ -432,6 +505,7 @@ function BingoCardComponent({ card, showWinners, showHeartBorders }: { card: Bin
           {card.id}
         </div>
       </div>
+      
     </div>
   );
 }
