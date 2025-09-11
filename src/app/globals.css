@@ -185,26 +185,26 @@ html {
   }
 
   .print-cards-container .bingo-card .grid {
-    display: grid !important;
-    grid-template-columns: repeat(5, 1fr) !important;
-    grid-template-rows: repeat(5, 1fr) !important;
-    gap: 0 !important;
+    display: table !important;
     width: 100% !important;
     height: 4cm !important;
     border: 2px solid black !important;
+    border-collapse: collapse !important;
   }
 
   .print-cards-container .bingo-card .grid > div {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    font-size: 14px !important;
+    display: table-cell !important;
+    vertical-align: middle !important;
+    text-align: center !important;
+    font-size: 16px !important;
     background: white !important;
     color: black !important;
     border: 1px solid black !important;
     line-height: 1 !important;
     padding: 0 !important;
     margin: 0 !important;
+    width: 20% !important;
+    height: 20% !important;
   }
 
   .print-cards-container .bingo-card .text-xs {

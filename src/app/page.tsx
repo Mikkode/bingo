@@ -190,31 +190,11 @@ export default function BingoApp() {
       (printFirstPage as HTMLElement).style.display = 'block';
     }
     
-    // Get all regular cards
-    const regularCards = document.querySelectorAll('.bingo-card');
-    
-    // Create print layout container
-    const printContainer = document.createElement('div');
-    printContainer.className = 'print-cards-container';
-    
-    // Add all cards to the container (they will wrap automatically)
-    regularCards.forEach(card => {
-      const clonedCard = card.cloneNode(true) as HTMLElement;
-      // Remove any print-specific classes and keep the original styling
-      clonedCard.classList.remove('hidden');
-      printContainer.appendChild(clonedCard);
-    });
-    
-    // Add the container to the body
-    document.body.appendChild(printContainer);
-    
     // Print
     window.print();
     
     // Clean up after print
     setTimeout(() => {
-      document.body.removeChild(printContainer);
-      
       // Restore elements
       nonPrintElements.forEach(el => {
         (el as HTMLElement).style.display = '';
@@ -367,43 +347,6 @@ export default function BingoApp() {
           </div>
         )}
 
-        {/* Print First Page - Winning Emotions and Numbers */}
-        {cards.length > 0 && (
-          <div className="print-first-page hidden">
-            {/* Winning Emotions for Print */}
-            <div className="print-winning-emotions">
-              <h3>❤️ 12 Heart Pattern Emotions ❤️</h3>
-              <div className="print-winning-emotions-grid">
-                {WINNING_EMOTIONS.map((emotion, index) => {
-                  const emotionData = EMOTIONS.find(e => e.name === emotion);
-                  return (
-                    <div key={index} className="print-winning-emotion">
-                      <div>{emotionData?.emoji}</div>
-                      <div>{emotion}</div>
-                    </div>
-                  );
-                })}
-              </div>
-              <p style={{textAlign: 'center', fontSize: '12px', marginTop: '8px', fontStyle: 'italic'}}>
-                These emotions form a ❤️ heart pattern when marked on winning cards
-              </p>
-            </div>
-            
-            {/* Winning Numbers for Print */}
-            <div className="print-winning-numbers">
-              <h3>🏆 Winning Cards Numbers 🏆</h3>
-              <div className="print-winning-numbers-list">
-                {cards
-                  .filter(card => card.isWinner)
-                  .map((card) => (
-                    <div key={card.id} className="print-winning-number">
-                      #{card.id}
-                    </div>
-                  ))}
-              </div>
-            </div>
-          </div>
-        )}
 
         {/* Print first page - hidden by default */}
         <div className="print-first-page hidden">
