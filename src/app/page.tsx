@@ -4,45 +4,58 @@ import { useState } from 'react';
 
 // List of 30 emotions with emojis and colors
 const EMOTIONS = [
-  { name: 'Joy', emoji: '😊', color: 'bg-yellow-200', borderColor: 'border-yellow-400' },
-  { name: 'Sadness', emoji: '😢', color: 'bg-blue-200', borderColor: 'border-blue-400' },
-  { name: 'Anger', emoji: '😠', color: 'bg-red-200', borderColor: 'border-red-400' },
-  { name: 'Fear', emoji: '😨', color: 'bg-purple-200', borderColor: 'border-purple-400' },
-  { name: 'Surprise', emoji: '😲', color: 'bg-orange-200', borderColor: 'border-orange-400' },
-  { name: 'Disgust', emoji: '🤢', color: 'bg-green-200', borderColor: 'border-green-400' },
-  { name: 'Love', emoji: '😍', color: 'bg-pink-200', borderColor: 'border-pink-400' },
-  { name: 'Laughter', emoji: '😂', color: 'bg-yellow-300', borderColor: 'border-yellow-500' },
-  { name: 'Confusion', emoji: '😕', color: 'bg-gray-200', borderColor: 'border-gray-400' },
-  { name: 'Pride', emoji: '😤', color: 'bg-indigo-200', borderColor: 'border-indigo-400' },
-  { name: 'Jealousy', emoji: '😒', color: 'bg-emerald-200', borderColor: 'border-emerald-400' },
-  { name: 'Nostalgia', emoji: '🥺', color: 'bg-rose-200', borderColor: 'border-rose-400' },
-  { name: 'Excitement', emoji: '🤩', color: 'bg-amber-200', borderColor: 'border-amber-400' },
-  { name: 'Calm', emoji: '😌', color: 'bg-cyan-200', borderColor: 'border-cyan-400' },
-  { name: 'Anxiety', emoji: '😰', color: 'bg-violet-200', borderColor: 'border-violet-400' },
-  { name: 'Hope', emoji: '🤞', color: 'bg-lime-200', borderColor: 'border-lime-400' },
-  { name: 'Gratitude', emoji: '🙏', color: 'bg-teal-200', borderColor: 'border-teal-400' },
-  { name: 'Curiosity', emoji: '🤔', color: 'bg-sky-200', borderColor: 'border-sky-400' },
-  { name: 'Determination', emoji: '💪', color: 'bg-red-300', borderColor: 'border-red-500' },
-  { name: 'Serenity', emoji: '😇', color: 'bg-blue-300', borderColor: 'border-blue-500' },
-  { name: 'Shyness', emoji: '😳', color: 'bg-pink-300', borderColor: 'border-pink-500' },
-  { name: 'Enthusiasm', emoji: '🤗', color: 'bg-orange-300', borderColor: 'border-orange-500' },
-  { name: 'Relief', emoji: '😮‍💨', color: 'bg-green-300', borderColor: 'border-green-500' },
-  { name: 'Embarrassment', emoji: '😅', color: 'bg-red-300', borderColor: 'border-red-500' },
-  { name: 'Wonder', emoji: '🤯', color: 'bg-purple-300', borderColor: 'border-purple-500' },
-  { name: 'Contentment', emoji: '😌', color: 'bg-blue-300', borderColor: 'border-blue-500' },
-  { name: 'Frustration', emoji: '😤', color: 'bg-red-400', borderColor: 'border-red-600' },
-  { name: 'Amazement', emoji: '😮', color: 'bg-yellow-400', borderColor: 'border-yellow-600' },
-  { name: 'Peace', emoji: '☮️', color: 'bg-green-400', borderColor: 'border-green-600' },
-  { name: 'Bliss', emoji: '🥰', color: 'bg-pink-400', borderColor: 'border-pink-600' }
+  // Positive / Happy
+  { name: 'Happy', emoji: '😃', color: 'bg-yellow-200', borderColor: 'border-yellow-400' },
+  { name: 'Very Happy', emoji: '😄', color: 'bg-yellow-300', borderColor: 'border-yellow-500' },
+  { name: 'Excited', emoji: '😁', color: 'bg-orange-200', borderColor: 'border-orange-400' },
+  { name: 'Amazed', emoji: '🤩', color: 'bg-amber-200', borderColor: 'border-amber-400' },
+  { name: 'Loving', emoji: '🥰', color: 'bg-pink-200', borderColor: 'border-pink-400' },
+  { name: 'Proud', emoji: '😎', color: 'bg-indigo-200', borderColor: 'border-indigo-400' },
+  { name: 'Innocent', emoji: '😇', color: 'bg-blue-200', borderColor: 'border-blue-400' },
+  { name: 'Friendly', emoji: '🤗', color: 'bg-green-200', borderColor: 'border-green-400' },
+  { name: 'Celebrating', emoji: '🥳', color: 'bg-purple-200', borderColor: 'border-purple-400' },
+  { name: 'Laughing', emoji: '😆', color: 'bg-yellow-400', borderColor: 'border-yellow-600' },
+  { name: 'Admiring', emoji: '😍', color: 'bg-pink-300', borderColor: 'border-pink-500' },
+  { name: 'Enjoying', emoji: '😋', color: 'bg-orange-300', borderColor: 'border-orange-500' },
+  { name: 'Hungry', emoji: '🤤', color: 'bg-red-200', borderColor: 'border-red-400' },
+  
+  // Neutral / Other Feelings
+  { name: 'Sleepy', emoji: '😴', color: 'bg-gray-200', borderColor: 'border-gray-400' },
+  { name: 'Feeling Hot', emoji: '🥵', color: 'bg-red-300', borderColor: 'border-red-500' },
+  { name: 'Feeling Cold', emoji: '🥶', color: 'bg-cyan-200', borderColor: 'border-cyan-400' },
+  { name: 'Nervous', emoji: '😬', color: 'bg-yellow-200', borderColor: 'border-yellow-400' },
+  { name: 'Shocked', emoji: '😱', color: 'bg-purple-300', borderColor: 'border-purple-500' },
+  { name: 'Curious', emoji: '🧐', color: 'bg-teal-200', borderColor: 'border-teal-400' },
+  { name: 'Sad', emoji: '😢', color: 'bg-blue-300', borderColor: 'border-blue-500' },
+  { name: 'Crying', emoji: '😭', color: 'bg-blue-400', borderColor: 'border-blue-600' },
+  { name: 'Angry', emoji: '😡', color: 'bg-red-400', borderColor: 'border-red-600' },
+  { name: 'Surprised', emoji: '😲', color: 'bg-orange-400', borderColor: 'border-orange-600' },
+  { name: 'Scared', emoji: '😨', color: 'bg-violet-200', borderColor: 'border-violet-400' },
+  { name: 'Worried', emoji: '🥺', color: 'bg-rose-200', borderColor: 'border-rose-400' },
+  { name: 'Sick', emoji: '🤢', color: 'bg-green-300', borderColor: 'border-green-500' },
+  { name: 'Embarrassed', emoji: '🫣', color: 'bg-pink-400', borderColor: 'border-pink-600' },
+  
+  // Optional Extras
+  { name: 'Thinking', emoji: '🤔', color: 'bg-sky-200', borderColor: 'border-sky-400' },
+  { name: 'Relaxed', emoji: '😌', color: 'bg-emerald-200', borderColor: 'border-emerald-400' },
+  { name: 'Surprised', emoji: '🤭', color: 'bg-lime-200', borderColor: 'border-lime-400' }
 ];
 
-// Pre-selected 25 winning emotions
+// Pre-selected 12 winning emotions (based on the heart pattern from the image)
 const WINNING_EMOTIONS = [
-  'Joy', 'Love', 'Laughter', 'Excitement', 'Hope',
-  'Gratitude', 'Determination', 'Serenity', 'Enthusiasm', 'Relief',
-  'Wonder', 'Contentment', 'Amazement', 'Peace', 'Bliss',
-  'Surprise', 'Calm', 'Curiosity', 'Pride', 'Shyness',
-  'Nostalgia', 'Confusion', 'Anxiety', 'Jealousy', 'Fear'
+  'Happy', 'Loving', 'Laughing', 'Excited', 'Amazed',
+  'Proud', 'Innocent', 'Friendly', 'Celebrating', 'Admiring',
+  'Enjoying', 'Relaxed'
+];
+
+// Heart pattern for winning cards (positions that form a heart when marked)
+// Based on the image: marked positions form a heart shape
+const HEART_PATTERN = [
+  [0, 0], [0, 1], [0, 3], [0, 4], // Row 1: B, I, G, O marked
+  [1, 0], [1, 2], [1, 4], // Row 2: B, N, O marked
+  [2, 0], [2, 4], // Row 3: B, O marked (center is free space)
+  [3, 1], [3, 3], // Row 4: I, G marked
+  [4, 2] // Row 5: N marked
 ];
 
 interface BingoCard {
@@ -56,12 +69,15 @@ export default function BingoApp() {
   const [cards, setCards] = useState<BingoCard[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [showWinners, setShowWinners] = useState(false);
+  const [showHeartBorders, setShowHeartBorders] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Function to check if a card contains only winning emotions
+  // Function to check if a card has winning emotions in heart pattern positions
   const isCardWinning = (grid: (string | null)[][]): boolean => {
-    const cardEmotions = grid.flat().filter(emotion => emotion !== null);
-    return cardEmotions.every(emotion => WINNING_EMOTIONS.includes(emotion));
+    return HEART_PATTERN.every(([row, col]) => {
+      const emotion = grid[row]?.[col];
+      return emotion && WINNING_EMOTIONS.includes(emotion);
+    });
   };
 
   // Function to generate a unique bingo card
@@ -74,15 +90,25 @@ export default function BingoApp() {
       grid = [];
       
       if (isWinner) {
-        // For winning cards, use exactly the 25 winning emotions
+        // For winning cards, place winning emotions in heart pattern positions
         const shuffledWinning = [...WINNING_EMOTIONS].sort(() => Math.random() - 0.5);
+        const shuffledOther = [...EMOTIONS.filter(e => !WINNING_EMOTIONS.includes(e.name))].sort(() => Math.random() - 0.5);
+        
+        // Initialize grid with random emotions (no empty cells)
         for (let i = 0; i < 5; i++) {
           grid[i] = [];
           for (let j = 0; j < 5; j++) {
             const emotionIndex = i * 5 + j;
-            grid[i][j] = shuffledWinning[emotionIndex] || '';
+            grid[i][j] = shuffledOther[emotionIndex]?.name || shuffledOther[0]?.name || 'Joy';
           }
         }
+        
+        // Place winning emotions in heart pattern positions
+        HEART_PATTERN.forEach(([row, col], index) => {
+          if (shuffledWinning[index]) {
+            grid[row][col] = shuffledWinning[index];
+          }
+        });
       } else {
         // For regular cards, use random emotions from all 30
         const shuffled = [...EMOTIONS].sort(() => Math.random() - 0.5);
@@ -177,9 +203,9 @@ export default function BingoApp() {
           {/* Winning Emotions Display */}
           <div className="mb-4 md:mb-6 p-3 sm:p-4 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl border-2 border-yellow-300">
             <h3 className="text-lg sm:text-xl font-bold text-orange-800 mb-3 text-center">
-              🏆 25 Winning Emotions 🏆
+              ❤️ 12 Heart Pattern Emotions ❤️
             </h3>
-            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-1 sm:gap-2">
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-4 gap-1 sm:gap-2">
               {WINNING_EMOTIONS.map((emotion, index) => {
                 const emotionData = EMOTIONS.find(e => e.name === emotion);
                 return (
@@ -193,6 +219,9 @@ export default function BingoApp() {
                 );
               })}
             </div>
+            <p className="text-center text-xs sm:text-sm text-orange-700 mt-2 font-medium">
+              These emotions form a ❤️ heart pattern when marked on winning cards
+            </p>
           </div>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mb-4 md:mb-6">
@@ -218,12 +247,26 @@ export default function BingoApp() {
             </button>
             {cards.length > 0 && (
               <>
-                <button
-                  onClick={() => setShowWinners(!showWinners)}
-                  className="bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700 text-white px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-2xl font-bold text-sm sm:text-base md:text-lg transition-transform duration-200 ease-out hover:scale-105 shadow-lg"
-                >
-                  {showWinners ? '🙈 Hide Winners' : '🏆 Show Winners'}
-                </button>
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                  <button
+                    onClick={() => setShowWinners(!showWinners)}
+                    className="bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700 text-white px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-2xl font-bold text-sm sm:text-base md:text-lg transition-transform duration-200 ease-out hover:scale-105 shadow-lg"
+                  >
+                    {showWinners ? '🙈 Hide Winners' : '🏆 Show Winners'}
+                  </button>
+                  
+                  <button
+                    onClick={() => setShowHeartBorders(!showHeartBorders)}
+                    className={`px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-2xl font-bold text-sm sm:text-base md:text-lg transition-transform duration-200 ease-out hover:scale-105 shadow-lg ${
+                      showHeartBorders
+                        ? 'bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 text-white'
+                        : 'bg-gradient-to-r from-gray-400 to-gray-600 hover:from-gray-500 hover:to-gray-700 text-white'
+                    }`}
+                  >
+                    {showHeartBorders ? '❤️ Hide Heart' : '❤️ Show Heart'}
+                  </button>
+                </div>
+                
                 <button
                   onClick={printCards}
                   className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-2xl font-bold text-sm sm:text-base md:text-lg transition-transform duration-200 ease-out hover:scale-105 shadow-lg"
@@ -284,7 +327,7 @@ export default function BingoApp() {
           <div className="print-first-page hidden">
             {/* Winning Emotions for Print */}
             <div className="print-winning-emotions">
-              <h3>🏆 25 Winning Emotions 🏆</h3>
+              <h3>❤️ 12 Heart Pattern Emotions ❤️</h3>
               <div className="print-winning-emotions-grid">
                 {WINNING_EMOTIONS.map((emotion, index) => {
                   const emotionData = EMOTIONS.find(e => e.name === emotion);
@@ -296,6 +339,9 @@ export default function BingoApp() {
                   );
                 })}
               </div>
+              <p style={{textAlign: 'center', fontSize: '12px', marginTop: '8px', fontStyle: 'italic'}}>
+                These emotions form a ❤️ heart pattern when marked on winning cards
+              </p>
             </div>
             
             {/* Winning Numbers for Print */}
@@ -323,7 +369,7 @@ export default function BingoApp() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8 print-grid">
               {cards.map((card, index) => (
                 <div key={card.id} className={index > 0 && (index + 1) % 4 === 0 ? 'print-break' : ''}>
-                  <BingoCardComponent card={card} showWinners={showWinners} />
+                  <BingoCardComponent card={card} showWinners={showWinners} showHeartBorders={showHeartBorders} />
                 </div>
               ))}
             </div>
@@ -335,7 +381,7 @@ export default function BingoApp() {
 }
 
 // Bingo card component
-function BingoCardComponent({ card, showWinners }: { card: BingoCard; showWinners: boolean }) {
+function BingoCardComponent({ card, showWinners, showHeartBorders }: { card: BingoCard; showWinners: boolean; showHeartBorders: boolean }) {
   const isWinnerVisible = showWinners && card.isWinner;
   
   return (
@@ -372,6 +418,10 @@ function BingoCardComponent({ card, showWinners }: { card: BingoCard; showWinner
         {card.grid.map((row, rowIndex) =>
           row.map((emotion, colIndex) => {
             const emotionData = EMOTIONS.find(e => e.name === emotion);
+            const isHeartPosition = HEART_PATTERN.some(([r, c]) => r === rowIndex && c === colIndex);
+            const isWinningEmotion = WINNING_EMOTIONS.includes(emotion || '');
+            const shouldShowHeart = showHeartBorders && isHeartPosition && isWinningEmotion;
+            
             return (
               <div
                 key={`${rowIndex}-${colIndex}`}
@@ -383,7 +433,7 @@ function BingoCardComponent({ card, showWinners }: { card: BingoCard; showWinner
               >
                 <div className="text-center">
                   <div className="text-lg sm:text-xl md:text-2xl mb-1 drop-shadow-lg">
-                    {emotionData?.emoji}
+                    {shouldShowHeart ? '❤️' : emotionData?.emoji}
                   </div>
                 </div>
               </div>
