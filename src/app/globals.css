@@ -90,6 +90,22 @@ html {
     display: none !important;
   }
 
+  /* Remove all box shadows and drop shadows for printing */
+  * {
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+  }
+
+  /* Force all backgrounds to be white for printing */
+  * {
+    background: white !important;
+    background-color: white !important;
+    background-image: none !important;
+  }
+
   /* First page - Winning emotions and numbers */
   .print-first-page {
     display: block !important;
