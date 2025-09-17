@@ -94,29 +94,60 @@ export default function BingoApp() {
         const shuffledWinning = [...WINNING_EMOTIONS].sort(() => Math.random() - 0.5);
         const shuffledOther = [...EMOTIONS.filter(e => !WINNING_EMOTIONS.includes(e.name))].sort(() => Math.random() - 0.5);
         
-        // Initialize grid with random emotions (no empty cells)
+        // Initialize grid with null values
         for (let i = 0; i < 5; i++) {
-          grid[i] = [];
-          for (let j = 0; j < 5; j++) {
-            const emotionIndex = i * 5 + j;
-            grid[i][j] = shuffledOther[emotionIndex]?.name || shuffledOther[0]?.name || 'Joy';
-          }
+          grid[i] = new Array(5).fill(null);
         }
         
-        // Place winning emotions in heart pattern positions
+        // Place winning emotions in heart pattern positions first
         HEART_PATTERN.forEach(([row, col], index) => {
           if (shuffledWinning[index]) {
             grid[row][col] = shuffledWinning[index];
           }
         });
+        
+        // Fill remaining positions with non-winning emotions (ensuring no duplicates)
+        let otherEmotionIndex = 0;
+        for (let i = 0; i < 5; i++) {
+          for (let j = 0; j < 5; j++) {
+            if (grid[i][j] === null) {
+              // Find next available non-winning emotion that's not already used
+              while (otherEmotionIndex < shuffledOther.length && 
+                     grid.some(row => row.includes(shuffledOther[otherEmotionIndex]?.name))) {
+                otherEmotionIndex++;
+              }
+              
+              if (otherEmotionIndex < shuffledOther.length) {
+                grid[i][j] = shuffledOther[otherEmotionIndex].name;
+                otherEmotionIndex++;
+              } else {
+                // Fallback if we run out of emotions
+                grid[i][j] = 'Joy';
+              }
+            }
+          }
+        }
       } else {
-        // For regular cards, use random emotions from all 30
+        // For regular cards, use random emotions from all 30 (ensuring no duplicates)
         const shuffled = [...EMOTIONS].sort(() => Math.random() - 0.5);
+        const usedEmotions = new Set<string>();
+        
         for (let i = 0; i < 5; i++) {
           grid[i] = [];
           for (let j = 0; j < 5; j++) {
-            const emotionIndex = i * 5 + j;
-            grid[i][j] = shuffled[emotionIndex]?.name || '';
+            // Find next available emotion that's not already used
+            let emotionIndex = 0;
+            while (emotionIndex < shuffled.length && usedEmotions.has(shuffled[emotionIndex].name)) {
+              emotionIndex++;
+            }
+            
+            if (emotionIndex < shuffled.length) {
+              grid[i][j] = shuffled[emotionIndex].name;
+              usedEmotions.add(shuffled[emotionIndex].name);
+            } else {
+              // Fallback if we run out of emotions
+              grid[i][j] = 'Joy';
+            }
           }
         }
       }
